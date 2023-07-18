@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            width: 5px;
+            color: red;
+            /* background-color: red; */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: black;
+            border-radius: 4px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: black;
+            height: 10vh;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+        }
+
+        .ul-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .li-items {
+            padding-right: 2rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .navbar h1 {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .navbar h1 span {
+            font-size: 2.5rem;
+            color: white;
+            background: red;
+            border-radius: 45px;
+            padding: 0 1rem;
+        }
+
+        .pizza-container {
+            margin-top: 5rem;
+            /* margin-left: 5rem; */
+            display: grid;
+            /* padding: 1rem; */
+            justify-content: space-around;
+            grid-template-columns: auto auto;
+            height: 87vh;
+            width: 77%;
+            box-shadow: 0 0 10px black;
+            margin-left: .5rem;
+            position: fixed;
+            overflow: auto;
+
+        }
+
+        .pizzas {
+            margin: 1rem;
+            /* width: 100%; */
+            height: 450px;
+            padding: 1rem;
+            box-shadow: 0 0 10px black;
+        }
+
+        .pizzas img {
+            background-position: center;
+            object-fit: cover;
+            background-repeat: no-repeat;
+            width: 450px;
+            height: 60%;
+        }
+
+        .btn-div {
+            padding: 1.5rem;
+        }
+
+        .list-container .btn {
+            width: 100%;
+            margin: 0 auto;
+            color: white;
+            background-color: red;
+            border: none;
+            outline: none;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-radius: 4px;
+            transition: .3s;
+            /* text-align: center; */
+        }
+
+        .list-container .btn:hover {
+            background-color: black;
+
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: 5fr 1fr;
+        }
+
+        .cart-data {
+            overflow: auto;
+            position: fixed;
+            top: 4.8rem;
+            right: 1rem;
+            height: 88vh;
+            width: 20%;
+            /* box-shadow: 0 0 10px black; */
+
+        }
+
+        /* .cart-data {
+            padding: .5rem;
+        } */
+
+        .addCart-content {
+            box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            margin: 1rem;
+        }
+
+        .sum-container {
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+            position: fixed;
+            bottom: 1rem;
+            height: 15vh;
+            right: 1.2rem;
+
+        }
+
+        .ul-container {
+            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+            /* padding: 1rem; */
+            margin: .4rem;
+            height: 68vh;
+            overflow: auto;
+
+        }
+
+        .sum-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.438); */
+            font-size: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <nav class="navbar">
+            <h1 class="logo"><span>P</span>izza<span>B</span>ala</h1>
+            <ul class="ul-item">
+                <li class="li-items">Home</li>
+                <li class="li-items">About</li>
+                <li class="li-items">Contact</li>
+                <li class="li-items">Services</li>
+                <li class="li-items">Price Details</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="main">
+        <div class="pizza-container" id="pizzaContainer">
+
+        </div>
+        <div class="cart-data">
+            <div class="ul-container">
+                <ul id="addCart">
+
+                </ul>
+            </div>
+            <div class="sum-container">
+                <h1 id="sum"></h1>
+                <!-- <button onclick="sumFunction()">sum</button> -->
+            </div>
+        </div>
+    </div>
+    <script>
+        const pizzaItems = [
+            {
+                Name: "Neapolitan Pizza.",
+                imgSrc: "./img/pizza1.jpeg",
+                price: 150,
+                type: "Veg"
+            },
+            {
+                Name: "Chicago Pizza.",
+                imgSrc: "./img/pizza2.jpeg",
+                price: 120,
+                type: "Veg"
+            },
+            {
+                Name: "New York-Style Pizza.",
+                imgSrc: "./img/pizza3.jpeg",
+                price: 180,
+                type: "Noveg"
+            },
+            {
+                Name: "Sicilian Pizza.",
+                imgSrc: "./img/pizza4.jpeg",
+                price: 170,
+                type: "Veg"
+            },
+            {
+                Name: "Greek Pizza.",
+                imgSrc: "./img/pizza5.jpeg",
+                price: 190,
+                type: "Noveg"
+            },
+            {
+                Name: "California Pizza.",
+                imgSrc: "./img/pizza6.jpeg",
+                price: 200,
+                type: "Noveg"
+            },
+            {
+                Name: "Detroit Pizza.",
+                imgSrc:"./img/pizza7.jpeg",
+                price: 110,
+                type: "Veg"
+            },
+            {
+                Name: "St. Louis Pizza.",
+                imgSrc:"./img/pizza8.jpeg",
+                price: 80,
+                type: "Veg"
+            },
+            {
+                Name: "Farmhouse Pizza",
+                imgSrc:"./img/pizza9.jpeg",
+                price: 50,
+                type: "Noveg"
+            },
+            {
+                Name: "Peppy Paneer Pizza",
+                imgSrc: "./img/pizza10.jpeg",
+                price: 250,
+                type: "Veg"
+            },
+            {
+                Name: "Aussie Pizza",
+                imgSrc: "./img/pizza11.jpeg",
+                price: 300,
+                type: "Veg"
+            },
+            {
+                Name: "Margherita Pizza",
+                imgSrc: "./img/pizza12.jpeg",
+                price: 90,
+                type: "Noveg"
+            },
+            {
+                Name: "Cheese N Corn Pizza",
+                imgSrc: "./img/pizza13.jpeg",
+                price: 70,
+                type: "Veg"
+            },
+        ];
+        let sum = 0;
+        const sumVar = document.getElementById("sum");
+        const sumFunction = (i) => {
+            sum += parseInt(pizzaItems[i].price);
+            // console.log(sum);
+            sumVar.innerHTML = `${sum}`;
+            const color = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`;
+            sumVar.style.color = color;
+            sumVar.style.textShadow = `1px 1px 10px rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},0.6)`;
+            // console.log(pizzaItems[i].price);
+
+        }
+
+
+        const addCart = document.querySelector("#addCart");
+        const getData = (i) => {
+            addCart.innerHTML += `<div class="addCart-content">
+        <li>Name : ${pizzaItems[i].Name}</li>
+        <li>Price : ${pizzaItems[i].price}</li>
+        <li>Type : ${pizzaItems[i].type}</li>
+        </div>
+        `;
+            sumFunction(i);
+        }
+        const pizzaContainer = document.getElementById("pizzaContainer");
+        for (i = 0; i <= 13; i++) {
+            pizzaContainer.innerHTML += `<div class="pizzas">
+        <img src="${pizzaItems[i].imgSrc}" alt="PizzaImage" >
+        <div class="list-container">
+            <div class="content">
+                <h1>Name : ${pizzaItems[i].Name}</h1>
+                <h3>Price : ${pizzaItems[i].price}</h3>
+                <p>Type : ${pizzaItems[i].type}</p>
+            </div>
+            <div class="btn-div">
+                <button class="btn" onclick="getData(${i})">Add To Cart</button>
+            </div>
+        </div>
+    </div>`
+        }
+
+    </script>
+</body>
+
+</html>
